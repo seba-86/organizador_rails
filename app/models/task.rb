@@ -9,6 +9,8 @@ class Task < ApplicationRecord
   validates :name, uniqueness: {case_sensitive: false} 
   validate :error_date
 
+    before_create :create_code #Callback 
+
   accepts_nested_attributes_for :participanting_users, allow_destroy: true
 
     def error_date
@@ -17,4 +19,10 @@ class Task < ApplicationRecord
         end
     end
 
+    def create_code
+        self.code = "#{owner_id}#{Time.now.to_i.to_s(36)}#{SecureRandom.hex(8)}"
+        # Code = id del owner + prefijo de estampa de tiempo, en entero luego a un string en base 36 +
+        # SecureRandom = metodo de rails para una condicion de unicidad y se cumpla 
+        # hex(8) = cantidad de bytes utilizados para el codigo 
+    end
 end
