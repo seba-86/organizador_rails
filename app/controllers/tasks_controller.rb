@@ -4,7 +4,13 @@ class TasksController < ApplicationController
 
   # GET /tasks
   def index
-    @tasks = Task.all
+    @tasks = Task.joins(:participants).where('owner_id = ? or participants.user_id = ?', current_user.id, current_user.id).group(:id)
+    # Acceder a las tareas que crea y tambien a las que hace parte 
+    # Si la tarea pertenece al usuario = se muestra o si el user pertenece a la tarea = se muestra 
+    # owner_id = id current_user
+    # participant.user_id = current_user 
+    # (owner_id, pertenece a la tabla de task ), (user_id, pertenece a la tabla de participants(participants.user_id))
+    # Joins duplica los registros al encontrar una coincidencia, para eso  = .group(:id)
   end
 
   # GET /tasks/1

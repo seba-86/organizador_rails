@@ -5,5 +5,6 @@ class Ability
 
   def initialize(user)
     can :manage, Task, owner_id: user.id
+    can :read, Task, participanting_users: { user_id: user.id} # habilitar el show 
   end
 end
