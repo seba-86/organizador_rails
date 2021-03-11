@@ -10,6 +10,7 @@ class Task < ApplicationRecord
   validate :error_date
 
     before_create :create_code #Callback 
+    after_create :send_email
 
   accepts_nested_attributes_for :participanting_users, allow_destroy: true
 
@@ -24,5 +25,11 @@ class Task < ApplicationRecord
         # Code = id del owner + prefijo de estampa de tiempo, en entero luego a un string en base 36 +
         # SecureRandom = metodo de rails para una condicion de unicidad y se cumpla 
         # hex(8) = cantidad de bytes utilizados para el codigo 
+    end
+    
+    def send_email
+        (participants + [owner]).each do |user|
+            ParticipantMailer.with(user: user, task: self).new_task_email.deliver!
+        end
     end
 end
