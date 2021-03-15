@@ -25,6 +25,7 @@ gem 'simple_form'
 gem 'devise'
 gem 'cocoon'
 gem 'cancancan'
+gem 'turbolinks_render'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 

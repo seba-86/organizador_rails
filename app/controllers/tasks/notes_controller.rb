@@ -4,6 +4,7 @@ class Tasks::NotesController < ApplicationController
         @note = @task.notes.new(note_params)
         @note.user = current_user
         @note.save
+        render 'tasks/show', task: @task
     end
 
     private
