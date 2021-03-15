@@ -4,6 +4,8 @@ class Task < ApplicationRecord
   has_many :participanting_users, class_name: 'Participant', dependent: :destroy # como participanting_user no existe se asocia al model Participant
   has_many :participants, through: :participanting_users, source: :user # nombre de la fuente que hara uso la relacion (User)
 
+  has_many :notes
+
   validates :participanting_users, presence: true  #valida la relacion
   validates_presence_of :name, :description
   validates :name, uniqueness: {case_sensitive: false} 
